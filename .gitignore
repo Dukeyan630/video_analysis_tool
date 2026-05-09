@@ -1,0 +1,15 @@
+# Python缓存
+_pycache_/
+*._pyc
+
+# 虚拟环境
+.venv/
+
+# 输出文件
+output/
+
+# SQLite数据库 
+*.db
+
+# macOS
+.DS_store
