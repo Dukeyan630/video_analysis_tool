@@ -91,7 +91,7 @@ source .venv/bin/activate
 
 ```bash
 python -m pip install -U pip
-python -m pip install pandas matplotlib
+python -m pip install -r requirements.txt
 ```
 
 # 运行

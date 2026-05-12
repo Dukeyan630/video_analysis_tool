@@ -10,14 +10,15 @@ from database import save_to_sqlite,query_posts
 
 from report_generator import export_report
 from plotter import auto_create_plt
-
+from utils import parse_args
 
 
 
 def main():
+    args = parse_args()
     NEW_EXCEL = Path("output")
     NEW_EXCEL.mkdir(exist_ok=True)
-    file_path = "/Users/yanshoulong/Downloads/Code/video_analysis_project/data/test_project.xlsx"
+    file_path = Path(args.input)
     df = load_data(file_path)
     df = clean_data(df)
 
