@@ -17,15 +17,15 @@
 
 # 项目结构：
 ——video analysis
-project/
-|——main.py
-|——loader.py
-|——cleaner.py
-|——analyzer.py
-|——plotter.py
-|——database.py
-|——report_generator.py
-
+project/src
+    |——main.py
+    |——loader.py
+    |——cleaner.py
+    |——analyzer.py
+    |——plotter.py
+    |——database.py
+    |——report_generator.py
+app
 
 ## main.py
 
@@ -75,6 +75,8 @@ project/
 负责：
 * 生成总结报告
 
+
+
 # 安装
 
 建议使用 Python 3.12
@@ -101,6 +103,10 @@ python -m pip install -r requirements.txt
 ```bash
 python main.py
 ```
+
+## 运行网页版本
+```bash
+python3 -m streamlit run app.py
 
 # 功能展示
 

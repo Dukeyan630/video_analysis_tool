@@ -6,7 +6,7 @@ rcParams["font.family"] = ["Arial Unicode MS"]
 rcParams["axes.unicode_minus"] = False
 OUTPUT_DIR = Path("output")
 OUTPUT_DIR.mkdir(exist_ok= True)
-from analyzer import(generate_platform_report,
+from src.analyzer import(generate_platform_report,
                      generate_play_level_report,
                      generate_top_report,
                      diff_time_analysis)

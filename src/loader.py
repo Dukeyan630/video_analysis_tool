@@ -1,7 +1,7 @@
 from pathlib import Path
 import pandas as pd
 
-def load_data(file_path: str) -> pd.DataFrame:
+def load_data(file_path) -> pd.DataFrame:
     """读取Excel或者CSV文件 ，并返回 DataFrame"""
     path = Path(file_path)
     
