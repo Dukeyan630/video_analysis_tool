@@ -52,38 +52,15 @@ if uploaded_file is not None:
         filtered_df = filtered_df[filtered_df["平台"] == selected_platform ]
 
     if selected_content_type!= "全部":
-        filtered_df = filtered_df[filtered_df["内容类型"] == selected_content_type ]    
-
-
+        filtered_df = filtered_df[filtered_df["内容类型"] == selected_content_type ]  
+        
     st.write(f"当前筛选后共有{len(filtered_df)}条数据")
 
     if filtered_df.empty:
         st.warning("当前筛选条件下没有数据")
-    else:
-    
-        st.subheader("清洗后数据预览")
-        st.dataframe(filtered_df.head(preview_rows),hide_index= True)
-
-
-        platform_df = get_platform_analysis(filtered_df)
-        st.subheader("平台分析")
-        st.dataframe(platform_df.head(),hide_index= True)
-
-
-        top_df = get_top_posts(filtered_df,top_n= 3).reset_index(drop= True)
-        st.subheader("根据互动量排名前三分析")
-        st.dataframe(top_df.head(),hide_index= True)
-        
-        summary = get_basic_summary(filtered_df)
-
-    #用streamlit 做图
-        if not platform_df.empty and "平台" in platform_df.columns and "平均互动量" in platform_df.columns:
-            chart_df = platform_df.set_index("平台")["平均互动量"]
-
-            st.subheader("各平台平均互动量图")
-            st.bar_chart(chart_df)
-        
-
+    else:  
+                
+        summary = get_basic_summary(filtered_df)   
         st.subheader("基础概览")
         col1, col2 , col3 = st.columns(3)
         col1.metric("总作品数",summary.get("总作品数",0))
@@ -92,21 +69,62 @@ if uploaded_file is not None:
         col4, col5 , col6 = st.columns(3)
         col4.metric("总点赞数", int(summary.get("总点赞数", 0)))
         col5.metric("总收藏数", int (summary.get("总收藏",0)))
-        col6.metric ("平均互动率",f"{summary.get("平均互动率",0):.2%}")
-        st.write(summary)
+        col6.metric ("平均互动率",f"{summary.get('平均互动率',0):.2%}")
 
-         #一键生成报告
-        if st.button("生成 Excel 分析报告"):
-            export_report(filtered_df)
-            st.success("报告生成完成,可以下载")
-            report_path = Path("output/report.xlsx")
+        platform_df = get_platform_analysis(filtered_df)
+        st.subheader("平台分析")
+        st.dataframe(platform_df.head(),hide_index= True)
 
-            with open(report_path,"rb")as f:
-                st.download_button(
-                    label="下载分析报告",
-                    data=f,
-                    file_name="another_report.xlsx",
-                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        top_df = get_top_posts(filtered_df,top_n= 3).reset_index(drop= True)
+        st.subheader("根据互动量排名前三分析")
+        st.dataframe(top_df.head(),hide_index= True) 
+
+
+        if not platform_df.empty and "平台" in platform_df.columns and "平均互动量" in platform_df.columns:
+            chart_df = platform_df.set_index("平台")["平均互动量"]
+
+            st.subheader("各平台平均互动量图")
+            st.bar_chart(chart_df)
+            
+
+
+            if "内容类型" in filtered_df.columns:
+                content_count = filtered_df["内容类型"].value_counts()
+                st.subheader("内容类型占比")
+                st.bar_chart(content_count)
+
+            if "发布时间段" in filtered_df.columns and "总互动量" in filtered_df.columns:
+                time_df = (
+                    filtered_df
+                    .groupby("发布时间段")["总互动量"]
+                    .mean()
                 )
+
+
+                order = ["早上","下午","晚上","深夜"]
+                time_df = time_df.reindex(order).dropna()
+
+            st.subheader("不同时间短的平均互动量")
+            st.line_chart(time_df)
+
+
+            st.subheader("清洗后数据预览")
+            st.dataframe(filtered_df.head(preview_rows),hide_index= True)
+
+
+
+            #一键生成报告
+            if st.button("生成 Excel 分析报告"):
+                export_report(filtered_df)
+                st.success("报告生成完成,可以下载")
+                report_path = Path("output/report.xlsx")
+
+                with open(report_path,"rb")as f:
+                    st.download_button(
+                        label="下载分析报告",
+                        data=f,
+                        file_name="another_report.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
 else:
     st.info("请先上传一个 Excel 或 CSV 文件")
