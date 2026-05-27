@@ -101,26 +101,27 @@ python -m pip install -r requirements.txt
 ## 运行命令行版本
 
 ```bash
-python main.py
+python3 src/main.py --input data/test_project.xlsx
 ```
 
 ## 运行网页版本
 ```bash
 python3 -m streamlit run app.py
+```
 
 # 功能展示
 
-![alt text](output/平台_播放量.png)
+![alt text](docs/平台_播放量.png)
 
 
 # 输入数据字段
 
 示例数据需要包含以下字段：
-｜字段名｜说明｜
-｜----｜----｜
-｜标题｜内容标题｜
-｜平台｜抖音 / 小红书 /快手等｜
-｜内容类型 | 视频 / 图文 |
+| 字段名 | 说明 |
+|---|---|
+| 标题 | 内容标题 |
+| 平台 | 抖音 / 小红书 / 快手等 |
+| 内容类型 | 视频 / 图文 |
 | 点赞 | 点赞数量 |
 | 收藏 | 收藏数量 |
 | 评论 | 评论数量 |
@@ -136,3 +137,7 @@ python3 -m streamlit run app.py
 - 使用SQLite 保存清洗后的数据，并支持 SQL 查询
 - 使用openpyxl 优化 Excel报告，包括多 sheet、冻结首行、自动列宽
 - 使用 argparse 支持命令行传入数据文件
+
+
+## 实现图展示
+![Dashboard](docs/dashboard.png)
