@@ -139,5 +139,12 @@ python3 -m streamlit run app.py
 - 使用 argparse 支持命令行传入数据文件
 
 
+## 网页功能
+- 上传xlsx、csv数据文件
+- 支持平台、内容类型、发布时间范围筛选
+- 支持互动率筛选
+- 展示基础指标、平台分析、热门内容、图表看板
+- 支持下载 Excel 分析报告
+
 ## 实现图展示
 ![Dashboard](docs/dashboard.png)

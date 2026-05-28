@@ -27,7 +27,7 @@ def get_top_interaction_rate_posts(df: pd.DataFrame, top_n : int = 10)-> pd.Data
     required_cols = ["标题","平台","互动率","播放量","总互动量"]
 
     if not all(col in df.columns for col in required_cols):
-     return pd.DataFrame()
+        return pd.DataFrame()
 
     return(df[required_cols].sort_values(by="互动率",ascending=False).head(top_n).reset_index(drop=True))  
 

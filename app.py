@@ -44,7 +44,7 @@ if uploaded_file is not None:
         "选择内容类型",
         content_options
     )
-
+        
     date_range = None
     if "发布时间" in cleaned_df.columns:
         min_date = cleaned_df["发布时间"].min().date()
@@ -55,6 +55,15 @@ if uploaded_file is not None:
             value = (min_date,max_date)
         )
 
+    #互动率筛选
+    min_rate =st.sidebar.slider(
+        "最低互动率",
+        min_value=0.0,
+        max_value=1.0,
+        value=0.0,
+        step=0.01
+    )
+
     #过滤文件
     filtered_df = cleaned_df.copy()
     if selected_platform != "全部":
@@ -63,12 +72,15 @@ if uploaded_file is not None:
     if selected_content_type!= "全部":
         filtered_df = filtered_df[filtered_df["内容类型"] == selected_content_type ]  
 
-    if "发布时间" in filtered_df.columns and len(date_range) == 2:
+    if "发布时间" in filtered_df.columns and date_range is not None and len(date_range) == 2:
         start_date, end_date = date_range
 
         filtered_df = filtered_df[
                 (filtered_df["发布时间"].dt.date >= start_date) &
                 (filtered_df["发布时间"].dt.date <= end_date)]
+        
+    if "互动率" in filtered_df.columns:
+        filtered_df = filtered_df[filtered_df["互动率"] >= min_rate]
         
     #实现功能
     platform_df = get_platform_analysis(filtered_df)
