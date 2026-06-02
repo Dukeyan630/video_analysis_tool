@@ -27,13 +27,13 @@ plotter/Streamlit 用来展示图表
  ↓
 database 录入数据库sqlite，支持sql查询
  ↓
-report_generater 导入excel生成数据报表
+report_generator 导入excel生成数据报表
 ## 4. 我实现的功能
 - 支持xlsx和csv 数据读取
 - 支持数据清洗和字段加工
 - 自动生成总互动量、互动等级、互动率、播放等级
 - 支持平台、内容类型、发布时间范围、互动率筛选
-- 支持平台分析、内容类型分析、时间短分析
+- 支持平台分析、内容类型分析、时间段分析
 - 支持 Streamlit 网页看板展示
 - 支持导出 Excel 多 Sheet 分析报告
 - 支持SQLite数据存储 和SQL语言查询
